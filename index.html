@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>DrowsyCam (Offline)</title>
+  <title>DrowsyCam (GitHub Pages Ready)</title>
   <style>
     body { background: #111; color: white; text-align: center; font-family: sans-serif; }
     #canvas { border: 1px solid white; margin-top: 10px; }
@@ -15,9 +15,10 @@
   <canvas id="canvas" width="320" height="240"></canvas>
   <div id="status">Status: ⏳ Menunggu OpenCV...</div>
 
-  <!-- OpenCV.js from CDN, placed before app script and without defer -->
+  <!-- Load OpenCV.js dari CDN -->
   <script src="https://docs.opencv.org/4.x/opencv.js" type="text/javascript"></script>
 
+  <!-- Script utama -->
   <script>
     const camURL = "http://192.168.190.249/capture";
     const alarmURL = "http://192.168.190.102/alarm";
@@ -87,7 +88,9 @@
       });
     }
 
+    // pastikan script hanya jalan setelah OpenCV siap
     cv['onRuntimeInitialized'] = () => {
+      console.log("✅ OpenCV siap");
       statusText.innerText = "✅ OpenCV siap. Memuat model...";
       faceCascade = new cv.CascadeClassifier();
       eyeCascade = new cv.CascadeClassifier();
