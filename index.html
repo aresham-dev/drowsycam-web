@@ -2,7 +2,6 @@
 <html>
 <head>
   <title>DrowsyCam (Offline)</title>
-  <script src="https://docs.opencv.org/4.x/opencv.js" type="text/javascript"defer></script>
   <style>
     body { background: #111; color: white; text-align: center; font-family: sans-serif; }
     #canvas { border: 1px solid white; margin-top: 10px; }
@@ -14,6 +13,7 @@
   <img id="esp32cam" width="320" height="240" crossorigin="anonymous" />
   <canvas id="canvas" width="320" height="240"></canvas>
   <div id="status">Status: ⏳ Menunggu OpenCV...</div>
+  <script src="https://docs.opencv.org/4.x/opencv.js" type="text/javascript"></script>
   <script>
     const camURL = "http://192.168.190.249/capture";
     const alarmURL = "http://192.168.190.102/alarm";
