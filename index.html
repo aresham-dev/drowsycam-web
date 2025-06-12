@@ -13,14 +13,14 @@
   <h2>DrowsyCam Debug Mode</h2>
   <img id="esp32cam" width="320" height="240" crossorigin="anonymous" />
   <canvas id="canvas" width="320" height="240"></canvas>
-  <div id="status">Status: ⏳ Menunggu OpenCV...</div>
+  <div id="status">Status:  Menunggu OpenCV...</div>
 
   <!-- Load OpenCV.js from CDN -->
   <script src="https://docs.opencv.org/4.x/opencv.js" type="text/javascript"></script>
 
   <!-- Main app logic with debugging -->
   <script>
-    console.log("🔁 Halaman dimuat");
+    console.log(" Halaman dimuat");
 
     const camURL = "http://192.168.190.249/capture";
     const alarmURL = "http://192.168.190.102/alarm";
@@ -33,7 +33,7 @@
     let faceCascade, eyeCascade;
 
     function fetchImage() {
-      console.log("📸 Mengambil gambar dari ESP32");
+      console.log(" Mengambil gambar dari ESP32");
       img.src = camURL + "?t=" + new Date().getTime();
     }
 
@@ -43,7 +43,7 @@
     };
 
     function processFrame() {
-      console.log("🧠 Memproses frame");
+      console.log(" Memproses frame");
       let src = cv.imread(canvas);
       let gray = new cv.Mat();
       cv.cvtColor(src, gray, cv.COLOR_RGBA2GRAY, 0);
@@ -71,15 +71,15 @@
       if (!eyesDetected) {
         if (!eyeClosedStart) eyeClosedStart = Date.now();
         else if (Date.now() - eyeClosedStart > eyeClosedThreshold) {
-          statusText.innerText = "🟥 Mata tertutup > 3 detik! Kirim alarm...";
+          statusText.innerText = " Mata tertutup > 3 detik! Kirim alarm...";
           sendAlarm();
           eyeClosedStart = null;
         } else {
-          statusText.innerText = "⚠️ Mata mungkin tertutup...";
+          statusText.innerText = "⚠ Mata mungkin tertutup...";
         }
       } else {
         eyeClosedStart = null;
-        statusText.innerText = "✅ Mata terbuka";
+        statusText.innerText = " Mata terbuka";
       }
 
       cv.imshow("canvas", src);
@@ -87,16 +87,16 @@
     }
 
     function sendAlarm() {
-      console.log("🚨 Mengirim alarm ke Pico");
+      console.log(" Mengirim alarm ke Pico");
       fetch(alarmURL).catch(() => {
-        statusText.innerText = "⚠️ Gagal kirim alarm!";
+        statusText.innerText = " Gagal kirim alarm!";
       });
     }
 
     cv['onRuntimeInitialized'] = () => {
-      console.log("✅ OpenCV siap (cv.onRuntimeInitialized dipanggil)");
-      alert("✅ OpenCV berhasil dimuat!");
-      statusText.innerText = "✅ OpenCV siap. Memuat model...";
+      console.log(" OpenCV siap (cv.onRuntimeInitialized dipanggil)");
+      alert(" OpenCV berhasil dimuat!");
+      statusText.innerText = " OpenCV siap. Memuat model...";
 
       faceCascade = new cv.CascadeClassifier();
       eyeCascade = new cv.CascadeClassifier();
@@ -108,13 +108,13 @@
       console.log("🔍 Load mata:", eyeLoaded);
 
       if (!faceLoaded || !eyeLoaded) {
-        statusText.innerText = "❌ Gagal load XML classifier!";
-        alert("❌ Gagal load XML");
+        statusText.innerText = " Gagal load XML classifier!";
+        alert(" Gagal load XML");
         return;
       }
 
-      statusText.innerText = "✅ Model dimuat. Memulai stream...";
-      alert("✅ Model berhasil dimuat");
+      statusText.innerText = " Model dimuat. Memulai stream...";
+      alert(" Model berhasil dimuat");
       setInterval(fetchImage, 2000);
     };
   </script>
